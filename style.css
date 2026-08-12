@@ -1,0 +1,357 @@
+/* ==========================================================================
+   Token di base
+   ========================================================================== */
+:root {
+  --bg: #1b1e24;
+  --bg-recess: #131519;
+  --panel: #262b33;
+  --panel-raised: #2c313b;
+  --border: #383e49;
+  --border-soft: #30353f;
+  --text: #edeff3;
+  --text-muted: #9aa1ae;
+  --text-faint: #6b7180;
+
+  --accent: #e8a33d;
+  --accent-hover: #f2b458;
+  --accent-text: #241a08;
+  --danger: #e5484d;
+  --danger-hover: #f16469;
+  --success: #3ddc84;
+
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --font-display: 'Segoe UI Semibold', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 0%, #232830 0%, transparent 45%),
+    radial-gradient(circle at 100% 100%, #20242c 0%, transparent 40%);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border-soft);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.brand { display: flex; flex-direction: column; gap: 2px; }
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  color: var(--text);
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fill-counter {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--text-muted);
+  background: var(--bg-recess);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  min-width: 76px;
+  text-align: center;
+  transition: color .2s, border-color .2s;
+}
+
+.fill-counter.is-complete {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+/* ==========================================================================
+   Bottoni
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--panel-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background .15s, transform .1s, border-color .15s;
+}
+
+.btn:hover { background: #333947; border-color: #454c5a; }
+.btn:active { transform: translateY(1px); }
+
+.btn-icon { font-size: 15px; line-height: 1; }
+
+.btn-ghost {
+  background: transparent;
+}
+.btn-ghost:hover { background: var(--panel); }
+
+.btn-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover { background: var(--danger-hover); border-color: var(--danger-hover); }
+
+/* ==========================================================================
+   Layout principale
+   ========================================================================== */
+.app-main {
+  flex: 1;
+  display: flex;
+  gap: 26px;
+  padding: 26px 28px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 14px;
+}
+
+/* -- Pannello campo: aspetto "incassato", come il vassoio nella scatola -- */
+.board-panel {
+  background: var(--panel);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+
+.board-wrapper {
+  position: relative;
+  background: var(--bg-recess);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  box-shadow:
+    inset 0 3px 10px rgba(0, 0, 0, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.board-svg {
+  display: block;
+  overflow: visible;
+}
+
+.peg {
+  fill: url(#pegHole);
+  stroke: rgba(255, 255, 255, 0.04);
+  stroke-width: 0.02;
+  transition: fill .12s;
+}
+
+.peg.highlight-valid { fill: var(--success); opacity: 0.55; }
+.peg.highlight-invalid { fill: var(--danger); opacity: 0.55; }
+
+.piece-group { cursor: grab; touch-action: none; }
+.piece-group.selected circle:first-of-type { filter: drop-shadow(0 0 0.05px #fff); }
+.piece-group.selected {
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.55));
+}
+
+/* -- Toast completamento -- */
+.complete-toast {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translate(-50%, 12px);
+  background: var(--success);
+  color: #0b2417;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  padding: 9px 18px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+}
+.complete-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* -- Pannello vassoio: aspetto "rialzato", pezzi liberi sopra il coperchio -- */
+.tray-panel {
+  background: var(--panel-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  width: 320px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.tray-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 12px;
+  min-height: 120px;
+}
+
+.tray-item {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  cursor: grab;
+  touch-action: none;
+  transition: transform .12s, border-color .12s, background .12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tray-item:hover {
+  transform: translateY(-2px);
+  border-color: #4a515f;
+}
+
+.tray-item.selected {
+  border-color: var(--accent);
+  background: #2f2718;
+}
+
+.tray-item-badge {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.tray-empty-hint {
+  color: var(--text-faint);
+  font-size: 13px;
+  margin-top: 10px;
+}
+.hidden { display: none !important; }
+
+/* ==========================================================================
+   Barra di selezione flottante
+   ========================================================================== */
+.selection-toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: 64px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: var(--panel-raised);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+}
+
+.selection-toolbar .btn { border-radius: 999px; }
+
+.selection-toolbar.shake { animation: shake .32s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(-50%); }
+  25% { transform: translateX(calc(-50% - 6px)); }
+  75% { transform: translateX(calc(-50% + 6px)); }
+}
+
+/* ==========================================================================
+   Vassoio / fantasma trascinato
+   ========================================================================== */
+.drag-ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.92;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.app-footer {
+  padding: 14px 28px 20px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+.app-footer .dot { margin: 0 8px; color: var(--border); }
+
+kbd {
+  font-family: var(--font-mono);
+  background: var(--panel-raised);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 760px) {
+  .app-main { flex-direction: column; align-items: stretch; }
+  .tray-panel { width: auto; }
+}

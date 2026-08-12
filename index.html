@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sfere — puzzle a incastro</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Definizioni SVG condivise (gradiente lucido sfere, incavo pioli) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <radialGradient id="glossHighlight" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65" />
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="0.10" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="pegHole" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#0b0c0f" />
+      <stop offset="100%" stop-color="#2c313b" />
+    </radialGradient>
+  </defs>
+</svg>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-title">SFERE</span>
+    <span class="brand-subtitle">puzzle a incastro · ispirato a IQ Puzzler Pro</span>
+  </div>
+  <div class="header-actions">
+    <div class="fill-counter" id="fillCounter">0 / 55</div>
+    <button id="resetBtn" class="btn btn-ghost">Svuota campo</button>
+  </div>
+</header>
+
+<main class="app-main">
+  <section class="board-panel">
+    <h2 class="panel-title">Campo di gioco</h2>
+    <div class="board-wrapper">
+      <svg id="boardSvg" class="board-svg"></svg>
+      <div id="completeToast" class="complete-toast">Campo completato</div>
+    </div>
+  </section>
+
+  <aside class="tray-panel">
+    <h2 class="panel-title">Pezzi disponibili</h2>
+    <div id="trayContainer" class="tray-container"></div>
+    <p id="trayEmptyHint" class="tray-empty-hint hidden">Tutti i pezzi sono sul campo.</p>
+  </aside>
+</main>
+
+<div id="selectionToolbar" class="selection-toolbar hidden">
+  <button id="rotateBtn" class="btn" title="Ruota (R)">
+    <span class="btn-icon">⟳</span> Ruota
+  </button>
+  <button id="flipBtn" class="btn" title="Capovolgi (F)">
+    <span class="btn-icon">⇋</span> Capovolgi
+  </button>
+  <button id="removeBtn" class="btn btn-danger" title="Rimuovi (Canc)">
+    <span class="btn-icon">✕</span> Rimuovi
+  </button>
+</div>
+
+<footer class="app-footer">
+  <span>Trascina un pezzo per posizionarlo</span>
+  <span class="dot">·</span>
+  <span>clic per selezionare</span>
+  <span class="dot">·</span>
+  <span><kbd>R</kbd> ruota</span>
+  <span class="dot">·</span>
+  <span><kbd>F</kbd> capovolgi</span>
+  <span class="dot">·</span>
+  <span><kbd>Canc</kbd> rimuove</span>
+</footer>
+
+<script src="js/geometry.js"></script>
+<script src="js/pieces.js"></script>
+<script src="js/board.js"></script>
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
